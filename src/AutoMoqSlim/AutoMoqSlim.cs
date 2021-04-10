@@ -1,14 +1,14 @@
-﻿using AutoMoq.Abstract;
+﻿using AutoMoqSlim.Abstract;
 using Moq;
 using System;
 
-namespace AutoMoq
+namespace AutoMoqSlim
 {
-    public class AutoMoq
+    public class AutoMoqSlim
     {
         readonly IContainer _container;
 
-        public AutoMoq(IContainer container)
+        public AutoMoqSlim(IContainer container)
         {
             _container = container;
         }

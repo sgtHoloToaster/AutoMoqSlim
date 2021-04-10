@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AutoMoq.Abstract
+namespace AutoMoqSlim.Abstract
 {
     public interface IContainer
     {

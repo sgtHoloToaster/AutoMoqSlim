@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AutoMoq.Tests
+namespace AutoMoqSlim.Tests
 {
     public class Class1
     {
