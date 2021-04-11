@@ -3,6 +3,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace AutoMoqSlim
 {
@@ -13,13 +14,17 @@ namespace AutoMoqSlim
 
         public T Create<T>()
         {
-            var constructor = typeof(T).GetConstructors().FirstOrDefault();
+            var constructor = GetConstructor<T>();
             var parameters = constructor.GetParameters()
                 .Select(p => _registeredInstances.TryGetValue(p.ParameterType, out var value) ? value : GetMock(p.ParameterType).Object)
                 .ToArray();
 
             return (T)constructor.Invoke(parameters);
         }
+
+        private ConstructorInfo GetConstructor<T>() =>
+            typeof(T).GetConstructors()
+                .FirstOrDefault(c => c.GetParameters().All(p => p.ParameterType.IsAbstract));
 
         private Mock CreateMock(Type type)
         {
