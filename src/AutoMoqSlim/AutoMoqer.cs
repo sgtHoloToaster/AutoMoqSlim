@@ -7,18 +7,18 @@ using System.Reflection;
 
 namespace AutoMoqSlim
 {
-    public class AutoMoqSlim
+    public class AutoMoqer
     {
         readonly ConcurrentDictionary<Type, Mock> _mocks = new();
         readonly Dictionary<Type, object?> _registeredInstances = new();
-        readonly AutoMoqConfig _autoMoqConfig;
+        readonly AutoMoqerConfig _autoMoqConfig;
 
-        public AutoMoqSlim()
+        public AutoMoqer()
         {
-            _autoMoqConfig = new AutoMoqConfig();
+            _autoMoqConfig = new AutoMoqerConfig();
         }
 
-        public AutoMoqSlim(AutoMoqConfig autoMoqConfig)
+        public AutoMoqer(AutoMoqerConfig autoMoqConfig)
         {
             _autoMoqConfig = autoMoqConfig;
         }

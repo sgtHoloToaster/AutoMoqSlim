@@ -2,7 +2,7 @@
 
 namespace AutoMoqSlim
 {
-    public class AutoMoqConfig
+    public class AutoMoqerConfig
     {
         public MockBehavior MockBehavior { get; set; } = MockBehavior.Default;
     }

@@ -10,7 +10,7 @@ namespace AutoMoqSlim.Tests
         public void CanGetMock()
         {
             // arrange
-            var target = new AutoMoqSlim();
+            var target = new AutoMoqer();
 
             // act
             var mock = target.GetMock<ICustomerRepository>();
@@ -24,7 +24,7 @@ namespace AutoMoqSlim.Tests
         public void ReturnedMockSetupIsPreserved()
         {
             // arrange
-            var target = new AutoMoqSlim();
+            var target = new AutoMoqer();
             var expected = new Customer(1, "John");
             target.GetMock<ICustomerRepository>()
                 .Setup(r => r.GetById(expected.Id))
@@ -43,7 +43,7 @@ namespace AutoMoqSlim.Tests
         public void CanCreateInstance()
         {
             // arrange
-            var target = new AutoMoqSlim();
+            var target = new AutoMoqer();
 
             // act
             var result = target.Create<CustomerRepositoryContainer>();
@@ -57,7 +57,7 @@ namespace AutoMoqSlim.Tests
         public void CreatedInstanceHasDefaultMock()
         {
             // arrange
-            var target = new AutoMoqSlim();
+            var target = new AutoMoqer();
 
             // act
             var result = target.Create<CustomerRepositoryContainer>();
@@ -71,7 +71,7 @@ namespace AutoMoqSlim.Tests
         public void CreatedInstanceHasRegisteredMock()
         {
             // arrange
-            var target = new AutoMoqSlim();
+            var target = new AutoMoqer();
             var expected = new Customer(1, "John");
             target.GetMock<ICustomerRepository>()
                 .Setup(r => r.GetById(expected.Id))
@@ -90,7 +90,7 @@ namespace AutoMoqSlim.Tests
         public void CreatedInstanceHasRegisteredDependency()
         {
             // arrange
-            var target = new AutoMoqSlim();
+            var target = new AutoMoqer();
             var expected = new DummyCustomerRepository();
 
             // act
@@ -106,7 +106,7 @@ namespace AutoMoqSlim.Tests
         public void SelectConstructorWithNonAbstractParameterIfItIsRegistered()
         {
             // arrange
-            var target = new AutoMoqSlim();
+            var target = new AutoMoqer();
             var expected = "It works";
             target.SetInstance(expected);
 
@@ -122,7 +122,7 @@ namespace AutoMoqSlim.Tests
         public void CreatedMockBehaviorIsLooseByDefault()
         {
             // arrange
-            var target = new AutoMoqSlim();
+            var target = new AutoMoqer();
 
             // act
             var result = target.GetMock<ICustomerRepository>();
@@ -135,7 +135,7 @@ namespace AutoMoqSlim.Tests
         public void CreatedNonGenericMockBehaviorIsLooseByDefault()
         {
             // arrange
-            var target = new AutoMoqSlim();
+            var target = new AutoMoqer();
 
             // act
             var result = target.GetMock(typeof(ICustomerRepository));
@@ -148,7 +148,7 @@ namespace AutoMoqSlim.Tests
         public void CanBeConfiguredToCreateStrictMocks()
         {
             // arrange
-            var target = new AutoMoqSlim(new AutoMoqConfig { MockBehavior = MockBehavior.Strict });
+            var target = new AutoMoqer(new AutoMoqerConfig { MockBehavior = MockBehavior.Strict });
 
             // act
             var result = target.GetMock<ICustomerRepository>();
@@ -161,7 +161,7 @@ namespace AutoMoqSlim.Tests
         public void CanBeConfiguredToCreateStrictNonGenericMocks()
         {
             // arrange
-            var target = new AutoMoqSlim(new AutoMoqConfig { MockBehavior = MockBehavior.Strict });
+            var target = new AutoMoqer(new AutoMoqerConfig { MockBehavior = MockBehavior.Strict });
 
             // act
             var result = target.GetMock(typeof(ICustomerRepository));
