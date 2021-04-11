@@ -1,6 +1,7 @@
 ﻿using Moq;
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace AutoMoqSlim
@@ -8,12 +9,13 @@ namespace AutoMoqSlim
     public class AutoMoqSlim
     {
         readonly ConcurrentDictionary<Type, Mock> _mocks = new();
+        readonly Dictionary<Type, object?> _registeredInstances = new();
 
         public T Create<T>()
         {
             var constructor = typeof(T).GetConstructors().FirstOrDefault();
             var parameters = constructor.GetParameters()
-                .Select(p => GetMock(p.ParameterType).Object)
+                .Select(p => _registeredInstances.TryGetValue(p.ParameterType, out var value) ? value : GetMock(p.ParameterType).Object)
                 .ToArray();
 
             return (T)constructor.Invoke(parameters);
@@ -31,9 +33,7 @@ namespace AutoMoqSlim
         public Mock<T> GetMock<T>() where T : class =>
             _mocks.GetOrAdd(typeof(T), new Mock<T>()).As<T>();
 
-        public void SetInstance<T>(T instance)
-        {
-            throw new NotImplementedException();
-        }
+        public void SetInstance<T>(T instance) =>
+            _registeredInstances[typeof(T)] = instance;
     }
 }
