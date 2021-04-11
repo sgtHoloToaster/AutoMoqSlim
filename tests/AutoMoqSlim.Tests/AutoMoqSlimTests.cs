@@ -132,6 +132,19 @@ namespace AutoMoqSlim.Tests
         }
 
         [Fact]
+        public void CreatedNonGenericMockBehaviorIsLooseByDefault()
+        {
+            // arrange
+            var target = new AutoMoqSlim();
+
+            // act
+            var result = target.GetMock(typeof(ICustomerRepository));
+
+            // assert
+            Assert.Equal(MockBehavior.Loose, result.Behavior);
+        }
+
+        [Fact]
         public void CanBeConfiguredToCreateStrictMocks()
         {
             // arrange
@@ -139,6 +152,19 @@ namespace AutoMoqSlim.Tests
 
             // act
             var result = target.GetMock<ICustomerRepository>();
+
+            // assert
+            Assert.Equal(MockBehavior.Strict, result.Behavior);
+        }
+
+        [Fact]
+        public void CanBeConfiguredToCreateStrictNonGenericMocks()
+        {
+            // arrange
+            var target = new AutoMoqSlim(new AutoMoqConfig { MockBehavior = MockBehavior.Strict });
+
+            // act
+            var result = target.GetMock(typeof(ICustomerRepository));
 
             // assert
             Assert.Equal(MockBehavior.Strict, result.Behavior);
