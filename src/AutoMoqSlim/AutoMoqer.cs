@@ -25,7 +25,9 @@ namespace AutoMoqSlim
 
         public object Create(Type type)
         {
-            if (_mocks.TryGetValue(type, out var mock))
+            if (_registeredInstances.TryGetValue(type, out var instance) && instance != null)
+                return instance;
+            else if (_mocks.TryGetValue(type, out var mock))
                 return mock.Object;
 
             var constructor = GetConstructor(type);

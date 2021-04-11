@@ -181,7 +181,22 @@ namespace AutoMoqSlim.Tests
             var result = target.Create<ICustomerRepository>();
 
             // assert
-            Assert.Equal(expected, result);
+            Assert.Same(expected, result);
+        }
+
+        [Fact]
+        public void CanCreateRegisteredInstance()
+        {
+            // arrange
+            var target = new AutoMoqer();
+            var expected = new DummyCustomerRepository();
+            target.SetInstance<ICustomerRepository>(expected);
+
+            // act
+            var result = target.Create<ICustomerRepository>();
+
+            // assert
+            Assert.Same(expected, result);
         }
     }
 }
