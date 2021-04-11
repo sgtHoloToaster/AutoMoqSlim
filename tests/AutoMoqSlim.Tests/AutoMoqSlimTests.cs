@@ -169,5 +169,19 @@ namespace AutoMoqSlim.Tests
             // assert
             Assert.Equal(MockBehavior.Strict, result.Behavior);
         }
+
+        [Fact]
+        public void CanCreateMockObject()
+        {
+            // arrange
+            var target = new AutoMoqer();
+            var expected = target.GetMock<ICustomerRepository>().Object;
+
+            // act
+            var result = target.Create<ICustomerRepository>();
+
+            // assert
+            Assert.Equal(expected, result);
+        }
     }
 }

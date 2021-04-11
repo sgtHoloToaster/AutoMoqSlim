@@ -25,6 +25,9 @@ namespace AutoMoqSlim
 
         public object Create(Type type)
         {
+            if (_mocks.TryGetValue(type, out var mock))
+                return mock.Object;
+
             var constructor = GetConstructor(type);
             var parameters = constructor.GetParameters()
                 .Select(p => _registeredInstances.TryGetValue(p.ParameterType, out var value) ? value : GetMock(p.ParameterType).Object)
