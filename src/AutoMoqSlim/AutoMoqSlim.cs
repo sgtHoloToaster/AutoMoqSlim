@@ -1,8 +1,7 @@
-﻿using AutoMoqSlim.Abstract;
-using Moq;
+﻿using Moq;
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace AutoMoqSlim
 {
@@ -12,8 +11,22 @@ namespace AutoMoqSlim
 
         public T Create<T>()
         {
-            throw new NotImplementedException();
+            var constructor = typeof(T).GetConstructors().FirstOrDefault();
+            var parameters = constructor.GetParameters()
+                .Select(p => GetMock(p.ParameterType).Object)
+                .ToArray();
+
+            return (T)constructor.Invoke(parameters);
         }
+
+        private Mock CreateMock(Type type)
+        {
+            var constructor = typeof(Mock<>).MakeGenericType(type).GetConstructor(new Type[] { });
+            return (Mock)constructor.Invoke(new object[] { });
+        }
+
+        private Mock GetMock(Type type) =>
+            _mocks.GetOrAdd(type, CreateMock(type));
 
         public Mock<T> GetMock<T>() where T : class =>
             _mocks.GetOrAdd(typeof(T), new Mock<T>()).As<T>();
