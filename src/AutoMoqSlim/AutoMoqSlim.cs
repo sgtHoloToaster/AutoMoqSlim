@@ -49,11 +49,11 @@ namespace AutoMoqSlim
             return (Mock)constructor.Invoke(new object[] { });
         }
 
-        private Mock GetMock(Type type) =>
+        public Mock GetMock(Type type) =>
             _mocks.GetOrAdd(type, CreateMock(type));
 
         public Mock<T> GetMock<T>() where T : class =>
-            _mocks.GetOrAdd(typeof(T), new Mock<T>()).As<T>();
+            _mocks.GetOrAdd(typeof(T), new Mock<T>(_autoMoqConfig.MockBehavior)).As<T>();
 
         public void SetInstance<T>(T instance) =>
             _registeredInstances[typeof(T)] = instance;
