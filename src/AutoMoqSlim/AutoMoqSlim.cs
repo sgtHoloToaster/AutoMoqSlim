@@ -11,6 +11,17 @@ namespace AutoMoqSlim
     {
         readonly ConcurrentDictionary<Type, Mock> _mocks = new();
         readonly Dictionary<Type, object?> _registeredInstances = new();
+        readonly AutoMoqConfig _autoMoqConfig;
+
+        public AutoMoqSlim()
+        {
+            _autoMoqConfig = new AutoMoqConfig();
+        }
+
+        public AutoMoqSlim(AutoMoqConfig autoMoqConfig)
+        {
+            _autoMoqConfig = autoMoqConfig;
+        }
 
         public object Create(Type type)
         {

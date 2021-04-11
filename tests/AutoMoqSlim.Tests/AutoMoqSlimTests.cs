@@ -117,5 +117,31 @@ namespace AutoMoqSlim.Tests
             // assert
             Assert.Equal(expected, result);
         }
+
+        [Fact]
+        public void CreatedMockBehaviorIsLooseByDefault()
+        {
+            // arrange
+            var target = new AutoMoqSlim();
+
+            // act
+            var result = target.GetMock<ICustomerRepository>();
+
+            // assert
+            Assert.Equal(MockBehavior.Loose, result.Behavior);
+        }
+
+        [Fact]
+        public void CanBeConfiguredToCreateStrictMocks()
+        {
+            // arrange
+            var target = new AutoMoqSlim(new AutoMoqConfig { MockBehavior = MockBehavior.Strict });
+
+            // act
+            var result = target.GetMock<ICustomerRepository>();
+
+            // assert
+            Assert.Equal(MockBehavior.Strict, result.Behavior);
+        }
     }
 }
