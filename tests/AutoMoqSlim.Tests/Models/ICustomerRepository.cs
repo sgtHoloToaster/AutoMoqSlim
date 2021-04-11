@@ -2,6 +2,6 @@
 {
     public interface ICustomerRepository
     {
-        Customer GetById(int id);
+        Customer? GetById(int id);
     }
 }

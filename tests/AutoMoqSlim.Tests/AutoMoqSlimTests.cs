@@ -85,5 +85,21 @@ namespace AutoMoqSlim.Tests
             // assert
             Assert.Equal(expected, result);
         }
+
+        [Fact]
+        public void CreatedInstanceHasRegisteredDependency()
+        {
+            // arrange
+            var target = new AutoMoqSlim();
+            var expected = new DummyCustomerRepository();
+
+            // act
+            target.SetInstance<ICustomerRepository>(expected);
+            var result = target.Create<CustomerRepositoryContainer>()
+                .CustomerRepository;
+
+            // assert
+            Assert.Equal(expected, result);
+        }
     }
 }
