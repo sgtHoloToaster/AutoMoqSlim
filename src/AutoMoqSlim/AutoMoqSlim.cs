@@ -45,8 +45,8 @@ namespace AutoMoqSlim
 
         private Mock CreateMock(Type type)
         {
-            var constructor = typeof(Mock<>).MakeGenericType(type).GetConstructor(new Type[] { });
-            return (Mock)constructor.Invoke(new object[] { });
+            var constructor = typeof(Mock<>).MakeGenericType(type).GetConstructor(new Type[] { typeof(MockBehavior) });
+            return (Mock)constructor.Invoke(new object[] { _autoMoqConfig.MockBehavior });
         }
 
         public Mock GetMock(Type type) =>
