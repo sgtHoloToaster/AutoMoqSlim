@@ -4,12 +4,13 @@
     <TargetFramework>netstandard2.0</TargetFramework>
 	<LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
-    <Version>0.0.1</Version>
+    <Version>0.0.2</Version>
     <Authors>Mikhail Podolskiy</Authors>
     <Description>A simple "auto-mocking" container that helps you test classes with multiple dependencies. Interface is inspired by darrencauthon/AutoMoq</Description>
     <PackageProjectUrl>https://github.com/sgtHoloToaster/AutoMoqSlim</PackageProjectUrl>
     <RepositoryUrl>https://github.com/sgtHoloToaster/AutoMoqSlim</RepositoryUrl>
-    <PackageTags>moq mock stub automoq automock autostub automoqslim tests unittests</PackageTags>
+    <PackageTags>moq mock stub automoq automock autostub automoqslim tests unittests core standard</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
