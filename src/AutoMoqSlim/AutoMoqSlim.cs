@@ -15,7 +15,6 @@ namespace AutoMoqSlim
 
         public T Create<T>()
         {
-            
             throw new NotImplementedException();
         }
 
@@ -28,7 +27,5 @@ namespace AutoMoqSlim
         {
             throw new NotImplementedException();
         }
-
-
     }
 }
