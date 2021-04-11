@@ -43,9 +43,11 @@ namespace AutoMoqSlim
 
         private ConstructorInfo GetConstructor(Type type) =>
             type.GetConstructors()
-                .Select(c => (Constructor: c, Parameters: c.GetParameters()))
+                .Select(c => new { Constructor = c, Parameters = c.GetParameters() })
                 .OrderByDescending(cp => cp.Parameters.Length)
-                .FirstOrDefault(cp => cp.Parameters.All(p => p.ParameterType.IsAbstract || _registeredInstances.ContainsKey(p.ParameterType)))
+                .FirstOrDefault(cp => 
+                    cp.Parameters.All(p => p.ParameterType.GetTypeInfo().IsAbstract 
+                    || _registeredInstances.ContainsKey(p.ParameterType)))
                 .Constructor;
 
         private Mock CreateMock(Type type)
