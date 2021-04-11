@@ -14,7 +14,7 @@ namespace AutoMoqSlim.Tests.Models
 
         public string Name { get; }
 
-        public override bool Equals(object obj) =>
+        public override bool Equals(object? obj) =>
             obj is Customer customer &&
                    Id == customer.Id &&
                    Name == customer.Name;
