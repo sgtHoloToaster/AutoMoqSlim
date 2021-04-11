@@ -38,5 +38,52 @@ namespace AutoMoqSlim.Tests
             // assert
             Assert.Equal(expected, result);
         }
+
+        [Fact]
+        public void CanCreateInstance()
+        {
+            // arrange
+            var target = new AutoMoqSlim();
+
+            // act
+            var result = target.Create<CustomerRepositoryContainer>();
+
+            // assert
+            Assert.NotNull(result);
+            Assert.IsType<CustomerRepositoryContainer>(result);
+        }
+
+        [Fact]
+        public void CreatedInstanceHasDefaultMock()
+        {
+            // arrange
+            var target = new AutoMoqSlim();
+
+            // act
+            var result = target.Create<CustomerRepositoryContainer>();
+
+            // assert
+            Assert.NotNull(result.CustomerRepository);
+            Assert.IsAssignableFrom<ICustomerRepository>(result.CustomerRepository);
+        }
+
+        [Fact]
+        public void CreatedInstanceHasRegisteredMock()
+        {
+            // arrange
+            var target = new AutoMoqSlim();
+            var expected = new Customer(1, "John");
+            target.GetMock<ICustomerRepository>()
+                .Setup(r => r.GetById(expected.Id))
+                .Returns(expected);
+
+            // act
+            var result = target.Create<CustomerRepositoryContainer>()
+                .CustomerRepository
+                .GetById(expected.Id);
+
+            // assert
+            Assert.Equal(expected, result);
+        }
     }
 }
