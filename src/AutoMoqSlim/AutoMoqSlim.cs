@@ -6,13 +6,6 @@ namespace AutoMoqSlim
 {
     public class AutoMoqSlim
     {
-        readonly IContainer _container;
-
-        public AutoMoqSlim(IContainer container)
-        {
-            _container = container;
-        }
-
         public T Create<T>()
         {
             throw new NotImplementedException();
