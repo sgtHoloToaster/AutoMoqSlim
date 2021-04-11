@@ -101,5 +101,21 @@ namespace AutoMoqSlim.Tests
             // assert
             Assert.Equal(expected, result);
         }
+
+        [Fact]
+        public void SelectConstructorWithNonAbstractParameterIfItIsRegistered()
+        {
+            // arrange
+            var target = new AutoMoqSlim();
+            var expected = "It works";
+            target.SetInstance(expected);
+
+            // act
+            var result = target.Create<CustomerRepositoryContainer>()
+                .Name;
+
+            // assert
+            Assert.Equal(expected, result);
+        }
     }
 }
