@@ -12,18 +12,21 @@ namespace AutoMoqSlim
         readonly ConcurrentDictionary<Type, Mock> _mocks = new();
         readonly Dictionary<Type, object?> _registeredInstances = new();
 
-        public T Create<T>()
+        public object Create(Type type)
         {
-            var constructor = GetConstructor<T>();
+            var constructor = GetConstructor(type);
             var parameters = constructor.GetParameters()
                 .Select(p => _registeredInstances.TryGetValue(p.ParameterType, out var value) ? value : GetMock(p.ParameterType).Object)
                 .ToArray();
 
-            return (T)constructor.Invoke(parameters);
+            return constructor.Invoke(parameters);
         }
 
-        private ConstructorInfo GetConstructor<T>() =>
-            typeof(T).GetConstructors()
+        public T Create<T>() =>
+            (T)Create(typeof(T));
+
+        private ConstructorInfo GetConstructor(Type type) =>
+            type.GetConstructors()
                 .Select(c => (Constructor: c, Parameters: c.GetParameters()))
                 .OrderByDescending(cp => cp.Parameters.Length)
                 .FirstOrDefault(cp => cp.Parameters.All(p => p.ParameterType.IsAbstract || _registeredInstances.ContainsKey(p.ParameterType)))
