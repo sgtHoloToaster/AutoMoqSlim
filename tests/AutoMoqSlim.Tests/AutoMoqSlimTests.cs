@@ -1,4 +1,5 @@
 using AutoMoqSlim.Tests.Models;
+using Moq;
 using Xunit;
 
 namespace AutoMoqSlim.Tests
@@ -16,6 +17,7 @@ namespace AutoMoqSlim.Tests
 
             // assert
             Assert.NotNull(mock);
+            Assert.IsType<Mock<ICustomerRepository>>(mock);
         }
 
         [Fact]
