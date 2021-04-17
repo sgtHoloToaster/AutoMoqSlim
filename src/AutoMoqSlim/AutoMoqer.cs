@@ -1,7 +1,6 @@
 ﻿using Moq;
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -10,7 +9,6 @@ namespace AutoMoqSlim
     public class AutoMoqer
     {
         readonly ConcurrentDictionary<Type, Mock> _mocks = new();
-        readonly Dictionary<Type, object?> _registeredInstances = new();
         readonly AutoMoqerConfig _autoMoqConfig;
 
         public AutoMoqer()
@@ -25,14 +23,14 @@ namespace AutoMoqSlim
 
         public object Create(Type type)
         {
-            if (_registeredInstances.TryGetValue(type, out var instance) && instance != null)
+            if (_autoMoqConfig.Container.TryResolve(type, out var instance) && instance != null)
                 return instance;
             else if (_mocks.TryGetValue(type, out var mock))
                 return mock.Object;
 
             var constructor = GetConstructor(type);
             var parameters = constructor.GetParameters()
-                .Select(p => _registeredInstances.TryGetValue(p.ParameterType, out var value) ? value : GetMock(p.ParameterType).Object)
+                .Select(p => _autoMoqConfig.Container.TryResolve(p.ParameterType, out var value) ? value : GetMock(p.ParameterType).Object)
                 .ToArray();
 
             return constructor.Invoke(parameters);
@@ -47,7 +45,7 @@ namespace AutoMoqSlim
                 .OrderByDescending(cp => cp.Parameters.Length)
                 .FirstOrDefault(cp => 
                     cp.Parameters.All(p => p.ParameterType.GetTypeInfo().IsAbstract 
-                    || _registeredInstances.ContainsKey(p.ParameterType)))
+                    || _autoMoqConfig.Container.IsRegistered(p.ParameterType)))
                 .Constructor;
 
         private Mock CreateMock(Type type)
@@ -63,6 +61,6 @@ namespace AutoMoqSlim
             _mocks.GetOrAdd(typeof(T), new Mock<T>(_autoMoqConfig.MockBehavior)).As<T>();
 
         public void SetInstance<T>(T instance) =>
-            _registeredInstances[typeof(T)] = instance;
+            _autoMoqConfig.Container.Register(instance);
     }
 }
