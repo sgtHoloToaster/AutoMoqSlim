@@ -61,6 +61,6 @@ namespace AutoMoqSlim
             _mocks.GetOrAdd(typeof(T), new Mock<T>(_autoMoqConfig.MockBehavior)).As<T>();
 
         public void SetInstance<T>(T instance) =>
-            _autoMoqConfig.Container.Register(instance);
+            _autoMoqConfig.Container.Register(typeof(T), instance);
     }
 }

@@ -6,6 +6,6 @@ namespace AutoMoqSlim
     {
         public MockBehavior MockBehavior { get; set; } = MockBehavior.Default;
 
-        public Container Container { get; set; } = new Container();
+        public IContainer Container { get; set; } = new Container();
     }
 }
