@@ -32,10 +32,7 @@ namespace AutoMoqSlim
                 return mock.Object;
 
             var constructor = GetConstructor(type);
-            var parameters = constructor.GetParameters()
-                .Select(p => _container.TryResolve(p.ParameterType, out var value) ? value : GetMock(p.ParameterType).Object)
-                .ToArray();
-
+            var parameters = GetParameters(constructor);
             return constructor.Invoke(parameters);
         }
 
@@ -50,6 +47,11 @@ namespace AutoMoqSlim
                     cp.Parameters.All(p => p.ParameterType.GetTypeInfo().IsAbstract 
                     || _container.IsRegistered(p.ParameterType)))
                 .Constructor;
+
+        private object?[]? GetParameters(ConstructorInfo constructor) =>
+            constructor.GetParameters()
+                .Select(p => _container.TryResolve(p.ParameterType, out var value) ? value : GetMock(p.ParameterType).Object)
+                .ToArray();
 
         private Mock CreateMock(Type type)
         {
