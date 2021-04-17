@@ -9,28 +9,31 @@ namespace AutoMoqSlim
     public class AutoMoqer
     {
         readonly ConcurrentDictionary<Type, Mock> _mocks = new();
-        readonly AutoMoqerConfig _autoMoqConfig;
+        readonly IContainer _container;
+        readonly MockBehavior _mockBehavior;
 
-        public AutoMoqer()
+        public AutoMoqer(MockBehavior mockBehavior = MockBehavior.Default)
         {
-            _autoMoqConfig = new AutoMoqerConfig();
+            _mockBehavior = mockBehavior;
+            _container = new Container();
         }
 
-        public AutoMoqer(AutoMoqerConfig autoMoqConfig)
+        public AutoMoqer(IContainer container, MockBehavior mockBehavior = MockBehavior.Default)
         {
-            _autoMoqConfig = autoMoqConfig;
+            _mockBehavior = mockBehavior;
+            _container = container;
         }
 
         public object Create(Type type)
         {
-            if (_autoMoqConfig.Container.TryResolve(type, out var instance) && instance != null)
+            if (_container.TryResolve(type, out var instance) && instance != null)
                 return instance;
             else if (_mocks.TryGetValue(type, out var mock))
                 return mock.Object;
 
             var constructor = GetConstructor(type);
             var parameters = constructor.GetParameters()
-                .Select(p => _autoMoqConfig.Container.TryResolve(p.ParameterType, out var value) ? value : GetMock(p.ParameterType).Object)
+                .Select(p => _container.TryResolve(p.ParameterType, out var value) ? value : GetMock(p.ParameterType).Object)
                 .ToArray();
 
             return constructor.Invoke(parameters);
@@ -45,22 +48,22 @@ namespace AutoMoqSlim
                 .OrderByDescending(cp => cp.Parameters.Length)
                 .FirstOrDefault(cp => 
                     cp.Parameters.All(p => p.ParameterType.GetTypeInfo().IsAbstract 
-                    || _autoMoqConfig.Container.IsRegistered(p.ParameterType)))
+                    || _container.IsRegistered(p.ParameterType)))
                 .Constructor;
 
         private Mock CreateMock(Type type)
         {
             var constructor = typeof(Mock<>).MakeGenericType(type).GetConstructor(new Type[] { typeof(MockBehavior) });
-            return (Mock)constructor.Invoke(new object[] { _autoMoqConfig.MockBehavior });
+            return (Mock)constructor.Invoke(new object[] { _mockBehavior });
         }
 
         public Mock GetMock(Type type) =>
             _mocks.GetOrAdd(type, CreateMock(type));
 
         public Mock<T> GetMock<T>() where T : class =>
-            _mocks.GetOrAdd(typeof(T), new Mock<T>(_autoMoqConfig.MockBehavior)).As<T>();
+            _mocks.GetOrAdd(typeof(T), new Mock<T>(_mockBehavior)).As<T>();
 
         public void SetInstance<T>(T instance) =>
-            _autoMoqConfig.Container.Register(typeof(T), instance);
+            _container.Register(typeof(T), instance);
     }
 }

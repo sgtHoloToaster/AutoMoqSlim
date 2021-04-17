@@ -148,7 +148,7 @@ namespace AutoMoqSlim.Tests
         public void CanBeConfiguredToCreateStrictMocks()
         {
             // arrange
-            var target = new AutoMoqer(new AutoMoqerConfig { MockBehavior = MockBehavior.Strict });
+            var target = new AutoMoqer(MockBehavior.Strict);
 
             // act
             var result = target.GetMock<ICustomerRepository>();
@@ -161,7 +161,7 @@ namespace AutoMoqSlim.Tests
         public void CanBeConfiguredToCreateStrictNonGenericMocks()
         {
             // arrange
-            var target = new AutoMoqer(new AutoMoqerConfig { MockBehavior = MockBehavior.Strict });
+            var target = new AutoMoqer(MockBehavior.Strict);
 
             // act
             var result = target.GetMock(typeof(ICustomerRepository));
