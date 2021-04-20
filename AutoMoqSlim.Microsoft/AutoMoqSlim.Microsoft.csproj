@@ -4,6 +4,12 @@
     <TargetFramework>netstandard2.0</TargetFramework>
 	<LangVersion>latest</LangVersion>
 	<Nullable>enable</Nullable>
+	<Authors>Mikhail Podolskiy</Authors>
+	<Description>A simple "auto-mocking" container that helps you test classes with multiple dependencies. The interface is inspired by darrencauthon/AutoMoq. If you don't need to use it with existing Microsoft.DependencyInjection.IServiceCollection, then it's better to pick the plain AutoMoqSlim</Description>
+	<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	<PackageProjectUrl>https://github.com/sgtHoloToaster/AutoMoqSlim</PackageProjectUrl>
+	<RepositoryUrl>https://github.com/sgtHoloToaster/AutoMoqSlim</RepositoryUrl>
+	<PackageTags>moq mock stub automoq automock autostub test testing unittest unittesting tdd core automoqcore standard automoqer aspnetcore microsoft servicecollection</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
