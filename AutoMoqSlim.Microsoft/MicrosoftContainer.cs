@@ -23,6 +23,11 @@ namespace AutoMoqSlim.Microsoft
         public void Register(Type type, object? instance)
         {
             _serviceCollection.Add(new ServiceDescriptor(type, instance));
+            Rebuild();
+        }
+
+        public void Rebuild()
+        {
             _serviceProvider = null;
         }
 
