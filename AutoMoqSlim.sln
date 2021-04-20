@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoMoqSlim", "src\AutoMoqSlim\AutoMoqSlim.csproj", "{97520F63-234A-4C46-85D8-1AF0EAFBF66E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoMoqSlim.Tests", "tests\AutoMoqSlim.Tests\AutoMoqSlim.Tests.csproj", "{EAF150BD-988D-43BE-B11E-BA5E1BDC59D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoMoqSlim.Tests", "tests\AutoMoqSlim.Tests\AutoMoqSlim.Tests.csproj", "{EAF150BD-988D-43BE-B11E-BA5E1BDC59D7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoMoqSlim.Microsoft", "AutoMoqSlim.Microsoft\AutoMoqSlim.Microsoft.csproj", "{76F092E0-7245-4ABF-8B6C-82CE62700BAF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{EAF150BD-988D-43BE-B11E-BA5E1BDC59D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EAF150BD-988D-43BE-B11E-BA5E1BDC59D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EAF150BD-988D-43BE-B11E-BA5E1BDC59D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76F092E0-7245-4ABF-8B6C-82CE62700BAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76F092E0-7245-4ABF-8B6C-82CE62700BAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76F092E0-7245-4ABF-8B6C-82CE62700BAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76F092E0-7245-4ABF-8B6C-82CE62700BAF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

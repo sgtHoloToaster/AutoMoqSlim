@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\AutoMoqSlim.Microsoft\AutoMoqSlim.Microsoft.csproj" />
     <ProjectReference Include="..\..\src\AutoMoqSlim\AutoMoqSlim.csproj" />
   </ItemGroup>
 
