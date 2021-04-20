@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AutoMoqSlim.Microsoft
 {
@@ -24,7 +22,7 @@ namespace AutoMoqSlim.Microsoft
 
         public void Register(Type type, object? instance)
         {
-            _serviceCollection.AddScoped(type, _ => instance);
+            _serviceCollection.Add(new ServiceDescriptor(type, instance));
             _serviceProvider = null;
         }
 
