@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoMoqSlim", "src\AutoMoqS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoMoqSlim.Tests", "tests\AutoMoqSlim.Tests\AutoMoqSlim.Tests.csproj", "{EAF150BD-988D-43BE-B11E-BA5E1BDC59D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoMoqSlim.Microsoft", "AutoMoqSlim.Microsoft\AutoMoqSlim.Microsoft.csproj", "{76F092E0-7245-4ABF-8B6C-82CE62700BAF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoMoqSlim.Microsoft", "src\AutoMoqSlim.Microsoft\AutoMoqSlim.Microsoft.csproj", "{76F092E0-7245-4ABF-8B6C-82CE62700BAF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
