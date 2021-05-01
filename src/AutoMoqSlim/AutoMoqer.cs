@@ -1,7 +1,9 @@
 ﻿using Moq;
+using Moq.Language.Flow;
 using System;
 using System.Collections.Concurrent;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 
 namespace AutoMoqSlim
@@ -67,5 +69,23 @@ namespace AutoMoqSlim
 
         public void SetInstance<T>(T instance) =>
             _container.Register(typeof(T), instance);
+
+        public ISetup<T> Setup<T>(Expression<Action<T>> expression) where T : class =>
+            GetMock<T>().Setup(expression);
+
+        public ISetup<T, TResult> Setup<T, TResult>(Expression<Func<T, TResult>> expression) where T : class =>
+            GetMock<T>().Setup(expression);
+
+        public void Verify<T>(Expression<Action<T>> expression) where T : class =>
+            GetMock<T>().Setup(expression);
+
+        public void Verify<T>(Expression<Action<T>> expression, string failMessage) where T : class =>
+            GetMock<T>().Verify(expression, failMessage);
+
+        public void Verify<T>(Expression<Action<T>> expression, Times times) where T : class =>
+            GetMock<T>().Verify(expression, times);
+
+        public void Verify<T>(Expression<Action<T>> expression, Times times, string failMessage) where T : class =>
+            GetMock<T>().Verify(expression, times, failMessage);
     }
 }
