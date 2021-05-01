@@ -4,7 +4,7 @@
     <TargetFrameworks>net45;netstandard1.3;netstandard2.0;netstandard2.1</TargetFrameworks>
 	<LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <Authors>Mikhail Podolskiy</Authors>
     <Description>A simple "auto-mocking" container that helps you test classes with multiple dependencies. The interface is inspired by darrencauthon/AutoMoq</Description>
     <PackageProjectUrl>https://github.com/sgtHoloToaster/AutoMoqSlim</PackageProjectUrl>
