@@ -1,5 +1,4 @@
 ﻿using Moq;
-using System;
 
 namespace AutoMoqSlim.Microsoft
 {
