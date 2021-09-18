@@ -27,7 +27,6 @@ namespace AutoMoqSlim
             _container = container;
         }
 
-
         /// <summary>
         /// Returns the instance registered in the container or creates a new one of <paramref name="type"/>. 
         /// For new instances, any abstract dependencies, not registered in the container, will be replaced with mocks. 
@@ -60,14 +59,26 @@ namespace AutoMoqSlim
             if (constructors.Length == 0)
                 throw new NoPublicConstructorException(type);
 
-            return constructors
+            var sortedByDependencies = constructors
                 .Select(c => new { Constructor = c, Parameters = c.GetParameters() })
                 .OrderByDescending(cp => cp.Parameters.Length)
-                .FirstOrDefault(cp =>
-                    cp.Parameters.All(p => p.ParameterType.GetTypeInfo().IsAbstract
-                    || _container.IsRegistered(p.ParameterType)))
-                .Constructor;
+                .ToList();
+
+            var constructor = sortedByDependencies.FirstOrDefault(cp => cp.Parameters.All(IsResolvable))?.Constructor;
+            if (constructor == null)
+            {
+                var notResolvedParameter = sortedByDependencies.First()
+                    .Parameters
+                    .First(p => !IsResolvable(p))
+                    .ParameterType;
+                throw new CouldNotResolveParameterException(type, notResolvedParameter);
+            }
+
+            return constructor;
         }
+
+        private bool IsResolvable(ParameterInfo parameter) =>
+            parameter.ParameterType.GetTypeInfo().IsAbstract || _container.IsRegistered(parameter.ParameterType);
 
         private object?[]? GetParameters(ConstructorInfo constructor) =>
             constructor.GetParameters()

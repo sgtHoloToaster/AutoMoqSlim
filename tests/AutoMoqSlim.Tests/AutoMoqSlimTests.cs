@@ -211,6 +211,18 @@ namespace AutoMoqSlim.Tests
         }
 
         [Fact]
+        public void ThrowsExceptionWhenCouldNotResolveConstructorParameter()
+        {
+            // arrange
+            var target = new AutoMoqer();
+
+            // act & assert
+            var ex = Assert.Throws<CouldNotResolveParameterException>(target.Create<ClassWithNonAbstractDependency>);
+            Assert.Equal(typeof(ClassWithNonAbstractDependency), ex.TargetType);
+            Assert.Equal(typeof(DummyCustomerRepository), ex.ParameterType);
+        }
+
+        [Fact]
         public void CanMockAbstractClasses()
         {
             // arrange
