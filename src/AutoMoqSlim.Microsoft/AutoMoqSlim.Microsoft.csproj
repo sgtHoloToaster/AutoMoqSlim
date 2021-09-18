@@ -10,6 +10,7 @@
 	<PackageProjectUrl>https://github.com/sgtHoloToaster/AutoMoqSlim</PackageProjectUrl>
 	<RepositoryUrl>https://github.com/sgtHoloToaster/AutoMoqSlim</RepositoryUrl>
 	<PackageTags>moq mock stub automoq automock autostub test testing unittest unittesting tdd core automoqcore standard automoqer aspnetcore microsoft servicecollection</PackageTags>
+	<Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
