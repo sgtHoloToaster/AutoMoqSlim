@@ -198,5 +198,19 @@ namespace AutoMoqSlim.Tests
             // assert
             Assert.Same(expected, result);
         }
+
+        [Fact]
+        public void CanMockAbstractClasses()
+        {
+            // arrange
+            var target = new AutoMoqer();
+
+            // act
+            var result = target.GetMock<AbstractCustomerRepository>();
+
+            // assert
+            Assert.NotNull(result);
+            Assert.IsAssignableFrom<Mock<AbstractCustomerRepository>>(result);
+        }
     }
 }
