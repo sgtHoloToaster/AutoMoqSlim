@@ -1,3 +1,4 @@
+using AutoMoqSlim.Exceptions;
 using AutoMoqSlim.Tests.Models;
 using Moq;
 using Xunit;
@@ -197,6 +198,28 @@ namespace AutoMoqSlim.Tests
 
             // assert
             Assert.Same(expected, result);
+        }
+
+        [Fact]
+        public void NoPublicConstructorExceptionIsThrownWhenClassHasNoPublicConstructor()
+        {
+            // arrange
+            var target = new AutoMoqer();
+
+            // act & assert
+            Assert.Throws<NoPublicConstructorException>(target.Create<ClassWithoutPublicConstructor>);
+        }
+
+        [Fact]
+        public void ThrowsExceptionWhenCouldNotResolveConstructorParameter()
+        {
+            // arrange
+            var target = new AutoMoqer();
+
+            // act & assert
+            var ex = Assert.Throws<CouldNotResolveParameterException>(target.Create<ClassWithNonAbstractDependency>);
+            Assert.Equal(typeof(ClassWithNonAbstractDependency), ex.TargetType);
+            Assert.Equal(typeof(DummyCustomerRepository), ex.ParameterType);
         }
 
         [Fact]
