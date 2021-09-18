@@ -89,7 +89,7 @@ namespace AutoMoqSlim
         /// <typeparam name="T">Type to mock</typeparam>
         /// <returns>Mock for a dependency with type <typeparamref name="T"/></returns>
         public Mock<T> GetMock<T>() where T : class =>
-            _mocks.GetOrAdd(typeof(T), new Mock<T>(_mockBehavior)).As<T>();
+            (Mock<T>)_mocks.GetOrAdd(typeof(T), new Mock<T>(_mockBehavior));
 
         /// <summary>
         /// Sets an instance of type <typeparamref name="T"/> to be used when resolving an object that needs <typeparamref name="T"/> 
