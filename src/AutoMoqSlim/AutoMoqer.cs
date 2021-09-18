@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using AutoMoqSlim.Exceptions;
+using Moq;
 using Moq.Language.Flow;
 using System;
 using System.Collections.Concurrent;
@@ -53,14 +54,20 @@ namespace AutoMoqSlim
         public T Create<T>() =>
             (T)Create(typeof(T));
 
-        private ConstructorInfo GetConstructor(Type type) =>
-            type.GetConstructors()
+        private ConstructorInfo GetConstructor(Type type)
+        {
+            var constructors = type.GetConstructors();
+            if (constructors.Length == 0)
+                throw new NoPublicConstructorException(type);
+
+            return constructors
                 .Select(c => new { Constructor = c, Parameters = c.GetParameters() })
                 .OrderByDescending(cp => cp.Parameters.Length)
-                .FirstOrDefault(cp => 
-                    cp.Parameters.All(p => p.ParameterType.GetTypeInfo().IsAbstract 
+                .FirstOrDefault(cp =>
+                    cp.Parameters.All(p => p.ParameterType.GetTypeInfo().IsAbstract
                     || _container.IsRegistered(p.ParameterType)))
                 .Constructor;
+        }
 
         private object?[]? GetParameters(ConstructorInfo constructor) =>
             constructor.GetParameters()

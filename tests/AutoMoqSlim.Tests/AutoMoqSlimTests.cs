@@ -1,3 +1,4 @@
+using AutoMoqSlim.Exceptions;
 using AutoMoqSlim.Tests.Models;
 using Moq;
 using Xunit;
@@ -197,6 +198,16 @@ namespace AutoMoqSlim.Tests
 
             // assert
             Assert.Same(expected, result);
+        }
+
+        [Fact]
+        public void NoPublicConstructorExceptionIsThrownWhenClassHasNoPublicConstructor()
+        {
+            // arrange
+            var target = new AutoMoqer();
+
+            // act & assert
+            Assert.Throws<NoPublicConstructorException>(target.Create<ClassWithoutPublicConstructor>);
         }
 
         [Fact]
