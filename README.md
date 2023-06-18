@@ -1,5 +1,5 @@
 # AutoMoqSlim
-AutoMoqSlim is a simple "auto-mocking" container inspired by [AutoMoq](https://github.com/darrencauthon/AutoMoq) with less dependencies and compatible with .NET Core
+AutoMoqSlim is a simple "auto-mocking" container inspired by [AutoMoq](https://github.com/darrencauthon/AutoMoq) with fewer dependencies and compatible with .NET Core
 
 ## What is it for?
 Suppose you have a class with multiple dependencies
